@@ -1,15 +1,26 @@
 float x;
 float y;
+float x2;
+float y2;
+float x3;
+float y3;
 float easing = 0.05;
+float easing2 =0.8;
+float easing3 = 0.4;
+
 
 void setup() {
   size(640, 360); 
-  noStroke();  
+  noStroke(); 
+  noCursor();
 }
 
-void draw() { 
-  background(51);
+
+
   
+void draw() {
+  background (51);
+
   float targetX = mouseX;
   float dx = targetX - x;
   x += dx * easing;
@@ -19,4 +30,25 @@ void draw() {
   y += dy * easing;
   
   ellipse(x, y, 66, 66);
+  if (mouseButton == LEFT ){
+    cursor();
+    fill (0) ; 
+   float targetX2 = mouseX;
+  float dx2 = targetX2 - x;
+  x += dx * easing; 
+  float targetY2 = mouseY;
+  float dy2 = targetY2 - y;
+  y += dy * easing2;}
+
+    else if (mouseButton == RIGHT ) {
+      cursor();
+    fill (255,0,0); 
+   float targetX3 = mouseX;
+  float dx3 = targetX3 - x;
+  x += dx * easing; 
+  float targetY3 = mouseY;
+  float dy3 = targetY3 - y;
+  y += dy * easing2;}else { noCursor();
+fill (255);} 
+   
 }

@@ -7,7 +7,9 @@ float y3;
 float easing = 0.05;
 float easing2 =0.8;
 float easing3 = 0.4;
-
+int r = 51;
+int g = 51;
+int b = 51;
 
 void setup() {
   size(640, 360); 
@@ -19,7 +21,7 @@ void setup() {
 
   
 void draw() {
-  background (51);
+  background (r,g,b);
 
   float targetX = mouseX;
   float dx = targetX - x;
@@ -52,3 +54,25 @@ void draw() {
 fill (255);} 
    
 }
+ void keyPressed() {
+ if ( key == CODED ) {
+   if (keyCode == UP ) {
+     r = 10;
+     g = 118;
+     b =255;
+   } else if ( keyCode == DOWN ) {
+     r =10;
+     g = 255;
+     b = 204;
+  } else if ( keyCode == RIGHT){
+    r = 255 ;
+    b = 10;
+    g = 133;
+  } else { 
+    r = 51;
+    g = 51;
+    b = 51;
+  }
+ }
+ }
+ 

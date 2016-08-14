@@ -1,3 +1,11 @@
+import controlP5.*;
+ControlP5 cp5;
+ControlTimer c;
+Textlabel t;
+Textarea myTextarea;
+int size; 
+String textValue = "";
+
 float x;
 float y;
 float x2;
@@ -12,17 +20,76 @@ int g = 51;
 int b = 51;
 
 void setup() {
-  size(640, 360); 
-  noStroke(); 
-  noCursor();
+  size(800, 500); 
+  noStroke();
+ 
+  
+  cp5 = new ControlP5(this);
+  ButtonBar b = cp5.addButtonBar("bar")
+     .setPosition(0, 0)
+     .setSize(400, 20)
+     .addItems(split("a b c d e f g h i j"," "))
+     ;
+     println(b.getItem("a"));
+  b.changeItem("a","text","first");
+  b.changeItem("b","text","second");
+  b.changeItem("c","text","third");
+  b.onMove(new CallbackListener(){
+    public void controlEvent(CallbackEvent ev) {
+      ButtonBar bar = (ButtonBar)ev.getController();
+      println("hello ",bar.hover());
+    }
+  });
+   c = new ControlTimer();
+   t = new Textlabel(cp5,"--",100,100);
+   c.setSpeedOfTime(1);
+  cp5.addSlider("size")
+  .setPosition(40,40)
+  .setSize(200,20)
+  .setRange(0,200)
+  .setValue(200)
+  .setColorCaptionLabel(color(20,20,20));
+  myTextarea= cp5.addTextarea("txt")
+                .setPosition(40, 90)
+                .setSize(200,200)
+                .setFont(createFont("aria",15))
+                .setLineHeight(14)
+                .setColor(color(128))
+                .setColorBackground(color(255,100))
+                .setColorForeground(color(255,100));
+                ;
+  myTextarea.setText("Instruction :"
+                    +"Left click the mouse to change the ball color to black and it will move faster. "
+                    +"Right click the mouse to change the ball color to red and it will move slightly slower then black. "
+                    +"Press UP button in the keyboard to change the background color to blue. "
+                    +"Press DOWN button in the keyboard to change the background color to green. "
+                    +"Press RIGHT button in the keyboard to change the background color to orange. "
+                    +"Press LEFT button in the keyboard to change the background color to grey. "
+                    +"The Slider is to adjust the size of the ball. "
+                    +"Slide right to enlarge the ball while slide left to make it smaller. "
+                    );
+     cp5.addTextfield("name of the ball")
+     .setPosition(40,300)
+     .setSize(200,40)
+     .setFont(createFont("aria",20))
+     .setFocus(true)
+     .setColor(color(255,0,0))
+     ;
+ 
+                 
+
 }
+
 
 
 
   
 void draw() {
+  
   background (r,g,b);
-
+  text(cp5.get(Textfield.class,"name of the ball").getText(),40,400);
+  text(textValue, 100,400);
+ 
   float targetX = mouseX;
   float dx = targetX - x;
   x += dx * easing;
@@ -31,8 +98,10 @@ void draw() {
   float dy = targetY - y;
   y += dy * easing;
   
-  ellipse(x, y, 66, 66);
+  ellipse(x, y, size+50, size+50);
   if (mouseButton == LEFT ){
+     t.setValue(c.toString());
+  t.draw(this);  t.setPosition(700, 40);
     cursor();
     fill (0) ; 
    float targetX2 = mouseX;
@@ -43,15 +112,22 @@ void draw() {
   y += dy * easing2;}
 
     else if (mouseButton == RIGHT ) {
-      cursor();
+     t.setValue(c.toString());
+  t.draw(this);  t.setPosition(700, 40);
+    cursor();  
     fill (255,0,0); 
    float targetX3 = mouseX;
   float dx3 = targetX3 - x;
   x += dx * easing; 
   float targetY3 = mouseY;
   float dy3 = targetY3 - y;
-  y += dy * easing2;}else { noCursor();
-fill (255);} 
+  y += dy * easing2;}else {
+         t.setValue(c.toString());
+  t.draw(this);  t.setPosition(700, 40);
+fill (255);
+ 
+
+} 
    
 }
  void keyPressed() {
@@ -75,4 +151,3 @@ fill (255);}
   }
  }
  }
- 
